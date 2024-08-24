@@ -4,6 +4,8 @@ namespace DotNetWrappers.System.Data.Common;
 
 public class DbContext(IQueryExecutor queryExecutor) : IDbContext
 {
+    protected internal IQueryExecutor QueryExecutor { get; } = queryExecutor;
+
     public DbContext(Func<IDbConnectionWrapper> dbConnectionFactory) : this(new QueryExecutor(dbConnectionFactory))
     {
     }
@@ -14,7 +16,7 @@ public class DbContext(IQueryExecutor queryExecutor) : IDbContext
 
     public virtual IEnumerable<T> FindAll<T>(ISelectQuery<T> query)
     {
-        return queryExecutor.ExecuteQuery<IEnumerable<T>, T>(query, dbCommand =>
+        return QueryExecutor.ExecuteQuery<IEnumerable<T>, T>(query, dbCommand =>
         {
             using var reader = dbCommand.ExecuteReader();
             return query.ReadAll(reader);
@@ -23,16 +25,16 @@ public class DbContext(IQueryExecutor queryExecutor) : IDbContext
 
     public virtual async Task<IEnumerable<T>> FindAllAsync<T>(ISelectQuery<T> query)
     {
-        return await queryExecutor.ExecuteQueryAsync<IEnumerable<T>, T>(query, dbCommand =>
+        return await QueryExecutor.ExecuteQueryAsync<IEnumerable<T>, T>(query, async dbCommand =>
         {
-            using var reader = dbCommand.ExecuteReader();
-            return query.ReadAllAsync(reader);
+            await using var reader = await dbCommand.ExecuteReaderAsync();
+            return await query.ReadAllAsync(reader);
         });
     }
 
     public virtual T FindOne<T>(ISelectQuery<T> query)
     {
-        return queryExecutor.ExecuteQuery(query, dbCommand =>
+        return QueryExecutor.ExecuteQuery<T, T>(query, dbCommand =>
         {
             using var reader = dbCommand.ExecuteReader();
             return query.ReadOne(reader);
@@ -41,32 +43,32 @@ public class DbContext(IQueryExecutor queryExecutor) : IDbContext
 
     public virtual async Task<T> FindOneAsync<T>(ISelectQuery<T> query)
     {
-        return await queryExecutor.ExecuteQueryAsync(query, async dbCommand =>
+        return await QueryExecutor.ExecuteQueryAsync(query, async dbCommand =>
         {
-            using var reader = await dbCommand.ExecuteReaderAsync();
+            await using var reader = await dbCommand.ExecuteReaderAsync();
             return await query.ReadOneAsync(reader);
         });
     }
 
     public virtual int Modify<T>(IModifyQuery<T> query)
     {
-        return queryExecutor.ExecuteQuery(query, dbCommand => dbCommand.ExecuteNonQuery());
+        return QueryExecutor.ExecuteQuery(query, dbCommand => dbCommand.ExecuteNonQuery());
     }
 
     public virtual async Task<int> ModifyAsync<T>(IModifyQuery<T> query)
     {
-        return await queryExecutor.ExecuteQueryAsync(query, async dbCommand => await dbCommand.ExecuteNonQueryAsync());
+        return await QueryExecutor.ExecuteQueryAsync(query, async dbCommand => await dbCommand.ExecuteNonQueryAsync());
     }
 
     public virtual TR EvaluateScalar<T, TR>(ISelectQuery<T> query, Func<object, TR> predicate)
     {
-        var obj = queryExecutor.ExecuteQuery(query, dbCommand => dbCommand.ExecuteScalar());
+        var obj = QueryExecutor.ExecuteQuery(query, dbCommand => dbCommand.ExecuteScalar());
         return predicate(obj!);
     }
 
     public virtual async Task<TR> EvaluateScalarAsync<T, TR>(ISelectQuery<T> query, Func<object, TR> predicate)
     {
-        var obj = await queryExecutor.ExecuteQueryAsync(query, async dbCommand => await dbCommand.ExecuteScalarAsync());
+        var obj = await QueryExecutor.ExecuteQueryAsync(query, async dbCommand => await dbCommand.ExecuteScalarAsync());
         return predicate(obj!);
     }
 }
