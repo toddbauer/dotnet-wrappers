@@ -1,50 +1,56 @@
 ﻿using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DotNetWrappers.System.Data.Common;
 
-public class QueryExecutor(Func<IDbConnectionWrapper> dbConnectionFactory) : IQueryExecutor
+public class QueryExecutor(Func<IDbConnectionWrapper> dbConnectionWrapperFactory) : IQueryExecutor
 {
+    protected internal Func<IDbConnectionWrapper> DbConnectionWrapperFactory { get; } = dbConnectionWrapperFactory;
+
+    [ExcludeFromCodeCoverage]
     public QueryExecutor(Func<DbConnection> dbConnectionFactory) : this(() => new DbConnectionWrapper(dbConnectionFactory()))
     {
     }
 
     public virtual TR ExecuteQuery<TR, T>(IQuery<T> query, Func<IDbCommandWrapper, TR> func)
     {
-        using var dbConnection = dbConnectionFactory();
-        dbConnection.Open();
-        using var dbCommand = dbConnection.CreateCommand();
-        dbCommand.CommandTimeout = query.CommandTimeout ?? dbCommand.CommandTimeout;
+        using var dbConnectionWrapper = DbConnectionWrapperFactory();
+        dbConnectionWrapper.Open();
+        using var dbCommandWrapper = dbConnectionWrapper.CreateCommand();
+        dbCommandWrapper.CommandTimeout = query.CommandTimeout ?? dbCommandWrapper.CommandTimeout;
         if (query.BindByName == true)
-            dbCommand.BindByName = true;
-        dbCommand.CommandText = query.CreateCommandText();
-        dbCommand.CommandType = query.CommandType;
+            dbCommandWrapper.BindByName = true;
+        dbCommandWrapper.CommandText = query.CreateCommandText();
+        dbCommandWrapper.CommandType = query.CommandType;
         if (query.ArrayBindCount != null)
-            dbCommand.ArrayBindCount = query.ArrayBindCount.Value;
+            dbCommandWrapper.ArrayBindCount = query.ArrayBindCount.Value;
 
-        BindParameters(query.Parameters(() => dbCommand.CreateParameter()), dbCommand);
+        // ReSharper disable once AccessToDisposedClosure
+        BindParameters(query.Parameters(() => dbCommandWrapper.CreateParameter()), dbCommandWrapper);
 
-        return func(dbCommand);
+        return func(dbCommandWrapper);
     }
 
-    public virtual async Task<TR> ExecuteQueryAsync<TR, T>(IQuery<T> query, Func<IDbCommandWrapper, Task<TR>> func)
+    public virtual async Task<TR> ExecuteQueryAsync<TR, T>(IQuery<T> query, Func<IDbCommandWrapper, Task<TR>> funcAsync)
     {
-        using var dbConnection = dbConnectionFactory();
-        await dbConnection.OpenAsync();
-        using var dbCommand = dbConnection.CreateCommand();
-        dbCommand.CommandTimeout = query.CommandTimeout ?? dbCommand.CommandTimeout;
+        await using var dbConnectionWrapper = DbConnectionWrapperFactory();
+        await dbConnectionWrapper.OpenAsync();
+        await using var dbCommandWrapper = dbConnectionWrapper.CreateCommand();
+        dbCommandWrapper.CommandTimeout = query.CommandTimeout ?? dbCommandWrapper.CommandTimeout;
         if (query.BindByName == true)
-            dbCommand.BindByName = true;
-        dbCommand.CommandText = query.CreateCommandText();
-        dbCommand.CommandType = query.CommandType;
+            dbCommandWrapper.BindByName = true;
+        dbCommandWrapper.CommandText = query.CreateCommandText();
+        dbCommandWrapper.CommandType = query.CommandType;
         if (query.ArrayBindCount != null)
-            dbCommand.ArrayBindCount = query.ArrayBindCount.Value;
+            dbCommandWrapper.ArrayBindCount = query.ArrayBindCount.Value;
 
-        BindParameters(query.Parameters(() => dbCommand.CreateParameter()), dbCommand);
+        // ReSharper disable once AccessToDisposedClosure
+        BindParameters(query.Parameters(() => dbCommandWrapper.CreateParameter()), dbCommandWrapper);
 
-        return func(dbCommand).Result;
+        return await funcAsync(dbCommandWrapper);
     }
 
-    public void BindParameters(IEnumerable<IDbParameterWrapper> dbDataParameters, IDbCommandWrapper dbCommand)
+    public virtual void BindParameters(IEnumerable<IDbParameterWrapper> dbDataParameters, IDbCommandWrapper dbCommand)
     {
         if (dbDataParameters == null!)
             return;

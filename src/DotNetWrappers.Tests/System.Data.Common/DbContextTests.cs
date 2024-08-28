@@ -1,10 +1,9 @@
-using System.Data;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using DotNetWrappers.System.Data.Common;
 using Moq;
 
-namespace DotNetWrappers.Tests;
+namespace DotNetWrappers.Tests.System.Data.Common;
 
 [TestClass]
 [ExcludeFromCodeCoverage]
@@ -25,7 +24,7 @@ public class DbContextTests
         _queryExecutorMock = new Mock<IQueryExecutor>();
 
         _target = new DbContext(_queryExecutorMock.Object);
-        _targetMock = new Mock<DbContext>(_queryExecutorMock.Object) {CallBase = true};
+        _targetMock = new Mock<DbContext>(_queryExecutorMock.Object) { CallBase = true };
     }
 
     [TestCleanup]
@@ -72,7 +71,7 @@ public class DbContextTests
         // Arrange
 
         // Act
-        var result = new DbContext(() => new TestDbConnection());
+        var result = new DbContext(() => new Mock<DbConnection>().Object);
 
         // Assert
         Assert.IsNotNull(result.QueryExecutor);
@@ -231,7 +230,7 @@ public class DbContextTests
             .Callback<IQuery<int>, Func<IDbCommandWrapper, int>>((_, f) => func = f)
             .Returns(queryResult);
         dbCommandWrapperMock.Setup(mock => mock.ExecuteNonQuery()).Returns(queryResult);
-        
+
         // Act
         var result = _targetMock.Object.Modify(modifyQueryMock.Object);
 
@@ -261,7 +260,7 @@ public class DbContextTests
             .Callback<IQuery<int>, Func<IDbCommandWrapper, Task<int>>>((_, f) => funcAsync = f)
             .ReturnsAsync(queryResult);
         dbCommandWrapperMock.Setup(mock => mock.ExecuteNonQueryAsync()).ReturnsAsync(queryResult);
-        
+
         // Act
         var result = await _targetMock.Object.ModifyAsync(modifyQueryMock.Object);
 
@@ -341,39 +340,4 @@ public class DbContextTests
     }
 
     #endregion EvaluateScalarAsync Tests
-}
-
-[ExcludeFromCodeCoverage]
-public class TestDbConnection : DbConnection
-{
-    protected override DbTransaction BeginDbTransaction(IsolationLevel isolationLevel)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void ChangeDatabase(string databaseName)
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void Close()
-    {
-        throw new NotImplementedException();
-    }
-
-    public override void Open()
-    {
-        throw new NotImplementedException();
-    }
-
-    [AllowNull] public override string ConnectionString { get; set; }
-    public override string Database => null!;
-    public override ConnectionState State => default;
-    public override string DataSource => null!;
-    public override string ServerVersion => null!;
-
-    protected override DbCommand CreateDbCommand()
-    {
-        throw new NotImplementedException();
-    }
 }
