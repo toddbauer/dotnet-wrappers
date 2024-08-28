@@ -61,5 +61,5 @@ jobs:
       run: dotnet pack --configuration Release
       working-directory: src/DotNetWrappers
     - name: Push Package
-      run: dotnet nuget push "bin/Release/DotNetWrapper.1.0.0.nupkg"  --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
+      run: dotnet nuget push "bin/Release/DotNetWrappers.1.0.0.nupkg"  --api-key ${{ secrets.GITHUB_TOKEN }} --source "github"
       working-directory: src/DotNetWrappers
