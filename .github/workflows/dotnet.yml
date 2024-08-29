@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: Build, test, coverage
+name: Build, Test, Lint, Cover
 
 on:
   push:
@@ -18,7 +18,7 @@ on:
 
 jobs:
   build-test-cover:
-    name: Build, test, coverage
+    name: Build, Test, Lint, Cover
     runs-on: ubuntu-latest
 
     permissions:
@@ -44,6 +44,11 @@ jobs:
     - name: Test
       run: dotnet test  --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
       working-directory: src/DotNetWrappers.Tests
+    - name: Lint
+      uses: super-linter/super-linter@v7.1.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        FILTER_REGEX_INCLUDE: .*src/DotNetWrappers/.*
     - name: Coverage
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
