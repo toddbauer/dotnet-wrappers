@@ -20,16 +20,16 @@ public abstract class QueryBase<T> : IQuery<T>
 
     public abstract IEnumerable<IDbParameterWrapper> Parameters(Func<IDbParameterWrapper> parameterFactory);
 
-    public virtual IDbParameterWrapper CreateParameter(Func<IDbParameterWrapper> parameterFactory, string name, object value, DbType? dbType)
+    public virtual IDbParameterWrapper CreateParameter(Func<IDbParameterWrapper> parameterFactory, string parameterName, object parameterValue, DbType? dbType)
     {
-        var dbDataParameter = parameterFactory();
+        var dbParameterWrapper = parameterFactory();
 
-        dbDataParameter.ParameterName = name;
-        dbDataParameter.Value = value;
+        dbParameterWrapper.ParameterName = parameterName;
+        dbParameterWrapper.Value = parameterValue;
 
         if (dbType != null)
-            dbDataParameter.DbType = dbType.Value;
+            dbParameterWrapper.DbType = dbType.Value;
 
-        return dbDataParameter;
+        return dbParameterWrapper;
     }
 }
