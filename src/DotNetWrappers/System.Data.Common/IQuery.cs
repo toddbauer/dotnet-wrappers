@@ -16,5 +16,5 @@ public interface IQuery<T>
     string CreateCommandText();
 
     IEnumerable<IDbParameterWrapper> Parameters(Func<IDbParameterWrapper> parameterFactory);
-    IDbParameterWrapper CreateParameter(Func<IDbParameterWrapper> parameterFactory, string name, object value, DbType? dbType = null);
+    IDbParameterWrapper CreateParameter(Func<IDbParameterWrapper> parameterFactory, string parameterName, object parameterValue, DbType? dbType = null);
 }
