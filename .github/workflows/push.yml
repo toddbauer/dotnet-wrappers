@@ -16,6 +16,9 @@ on:
       - '**'
   workflow_dispatch:
 
+permissions:
+  contents: read
+  
 jobs:
   build-test-cover:
     name: Lint, Build, Test, Cover
