@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: Build, test, coverage
+name: Lint, Build, Test, Cover
 
 on:
   push:
@@ -18,7 +18,7 @@ on:
 
 jobs:
   build-test-cover:
-    name: Build, test, coverage
+    name: Lint, Build, Test, Cover
     runs-on: ubuntu-latest
 
     steps:
@@ -31,6 +31,12 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
       working-directory: src
+    - name: Lint
+      uses: github/super-linter@v4
+      env:
+        VALIDATE_ALL_CODEBASE: false
+        DEFAULT_BRANCH: "main"
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}    
     - name: Build
       run: dotnet build --configuration Release --no-restore
       working-directory: src/DotNetWrappers
