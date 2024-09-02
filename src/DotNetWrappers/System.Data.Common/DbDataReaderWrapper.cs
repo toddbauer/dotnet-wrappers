@@ -18,8 +18,8 @@ public class DbDataReaderWrapper(DbDataReader dbDataReader) : IDbDataReaderWrapp
 
     public virtual char GetChar(int i) => DbDataReader.GetChar(i);
 
-    public virtual long GetChars(int i, long fieldoffset, char[]? buffer, int bufferoffset, int length) =>
-        DbDataReader.GetChars(i, fieldoffset, buffer, bufferoffset, length);
+    public virtual long GetChars(int i, long fieldOffset, char[]? buffer, int bufferOffset, int length) =>
+        DbDataReader.GetChars(i, fieldOffset, buffer, bufferOffset, length);
 
     IDataReader IDataRecord.GetData(int i) => new DbDataReaderWrapper(DbDataReader.GetData(i));
     public virtual IDbDataReaderWrapper GetData(int ordinal) => new DbDataReaderWrapper(DbDataReader.GetData(ordinal));
