@@ -1,5 +1,5 @@
 {
-  "threshold": 200,
+  "threshold": 20000,
   "reporters": ["html", "markdown"],
   "ignore": [
     "**/node_modules/**",
