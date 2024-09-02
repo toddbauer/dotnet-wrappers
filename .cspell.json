@@ -23,6 +23,8 @@
         "**/*.md",
         "**/DotNetWrappers.Tests/**",
         "**/.editorconfig",
-        "**/.jscpd.json"
+        "**/.jscpd.json",
+        "**/.cspell.json",
+        "**/*.yml"
   ]
 }
