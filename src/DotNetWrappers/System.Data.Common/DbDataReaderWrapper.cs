@@ -31,7 +31,7 @@ public class DbDataReaderWrapper(DbDataReader dbDataReader) : IDbDataReaderWrapp
     public virtual T GetFieldValue<T>(int ordinal) => DbDataReader.GetFieldValue<T>(ordinal);
     public virtual Task<T> GetFieldValueAsync<T>(int ordinal) => DbDataReader.GetFieldValueAsync<T>(ordinal);
 
-    public virtual Task<T> GetFieldValueAsync<T>(int ordinal, CancellationToken cancellationToken) => 
+    public virtual Task<T> GetFieldValueAsync<T>(int ordinal, CancellationToken cancellationToken) =>
         DbDataReader.GetFieldValueAsync<T>(ordinal, cancellationToken);
 
     public virtual Task<bool> ReadAsync() => DbDataReader.ReadAsync();
@@ -40,7 +40,7 @@ public class DbDataReaderWrapper(DbDataReader dbDataReader) : IDbDataReaderWrapp
     public virtual Task<bool> NextResultAsync(CancellationToken cancellationToken) => DbDataReader.NextResultAsync(cancellationToken);
     public virtual Task CloseAsync() => DbDataReader.CloseAsync();
 
-    public virtual Task<DataTable?> GetSchemaTableAsync(CancellationToken cancellationToken = default) => 
+    public virtual Task<DataTable?> GetSchemaTableAsync(CancellationToken cancellationToken = default) =>
         DbDataReader.GetSchemaTableAsync(cancellationToken);
 
     public virtual Task<ReadOnlyCollection<DbColumn>> GetColumnSchemaAsync(CancellationToken cancellationToken = default) =>

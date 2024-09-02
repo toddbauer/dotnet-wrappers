@@ -1,8 +1,8 @@
-﻿using System.Data;
+﻿using DotNetWrappers.System.Data.Common;
+using Moq;
+using System.Data;
 using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
-using DotNetWrappers.System.Data.Common;
-using Moq;
 
 namespace DotNetWrappers.Tests.System.Data.Common;
 
@@ -24,7 +24,7 @@ public class QueryExecutorTests
         _dbConnectionWrapperFactoryMock = new Mock<Func<IDbConnectionWrapper>>();
 
         _target = new QueryExecutor(_dbConnectionWrapperFactoryMock.Object);
-        _targetMock = new Mock<QueryExecutor>(_dbConnectionWrapperFactoryMock.Object) {CallBase = true};
+        _targetMock = new Mock<QueryExecutor>(_dbConnectionWrapperFactoryMock.Object) { CallBase = true };
     }
 
     [TestCleanup]
@@ -87,7 +87,7 @@ public class QueryExecutorTests
         var dbCommandWrapperMock = new Mock<IDbCommandWrapper>();
         var dbParameterMock1 = new Mock<IDbParameterWrapper>();
         var dbParameterMock2 = new Mock<IDbParameterWrapper>();
-        var dbParameterMocks = new[] {dbParameterMock1.Object, dbParameterMock2.Object};
+        var dbParameterMocks = new[] { dbParameterMock1.Object, dbParameterMock2.Object };
         var dbParameterMock3 = new Mock<IDbParameterWrapper>();
         Func<IDbParameterWrapper> dbParameterWrapperFunc = null!;
 
@@ -155,7 +155,7 @@ public class QueryExecutorTests
         var dbCommandWrapperMock = new Mock<IDbCommandWrapper>();
         var dbParameterMock1 = new Mock<IDbParameterWrapper>();
         var dbParameterMock2 = new Mock<IDbParameterWrapper>();
-        var dbParameterMocks = new[] {dbParameterMock1.Object, dbParameterMock2.Object};
+        var dbParameterMocks = new[] { dbParameterMock1.Object, dbParameterMock2.Object };
         var dbParameterMock3 = new Mock<IDbParameterWrapper>();
         Func<IDbParameterWrapper> dbParameterWrapperFunc = null!;
 
@@ -376,7 +376,7 @@ public class QueryExecutorTests
         // Arrange
         var dbParameterWrapperMock1 = new Mock<IDbParameterWrapper>();
         var dbParameterWrapperMock2 = new Mock<IDbParameterWrapper>();
-        var dbDataParameters = new List<IDbParameterWrapper> {dbParameterWrapperMock1.Object, dbParameterWrapperMock2.Object};
+        var dbDataParameters = new List<IDbParameterWrapper> { dbParameterWrapperMock1.Object, dbParameterWrapperMock2.Object };
         var dbCommandWrapperMock = new Mock<IDbCommandWrapper>();
         var dbDataParametersMock = new Mock<IDbParameterCollectionWrapper>();
         dbCommandWrapperMock.SetupGet(mock => mock.Parameters).Returns(dbDataParametersMock.Object);

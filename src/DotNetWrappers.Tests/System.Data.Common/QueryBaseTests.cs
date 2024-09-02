@@ -1,7 +1,7 @@
-﻿using System.Data;
-using System.Diagnostics.CodeAnalysis;
-using DotNetWrappers.System.Data.Common;
+﻿using DotNetWrappers.System.Data.Common;
 using Moq;
+using System.Data;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DotNetWrappers.Tests.System.Data.Common;
 
@@ -19,7 +19,7 @@ public class QueryBaseTests
     public void TestInitialize()
     {
         _target = new QueryBaseTest();
-        _targetMock = new Mock<QueryBaseTest> {CallBase = true};
+        _targetMock = new Mock<QueryBaseTest> { CallBase = true };
     }
 
     [TestCleanup]

@@ -21,7 +21,7 @@ public class DbDataAdapterWrapper(DbDataAdapter dbDataAdapter) : IDbDataAdapterW
 
     public IDbCommandWrapper SelectCommand
     {
-        
+
         get => new DbCommandWrapper(DbDataAdapter.SelectCommand!);
         set => DbDataAdapter.SelectCommand = value.DbCommand;
     }
@@ -35,16 +35,16 @@ public class DbDataAdapterWrapper(DbDataAdapter dbDataAdapter) : IDbDataAdapterW
     public int Fill(DataSet dataSet) => DbDataAdapter.Fill(dataSet);
     public virtual int Fill(DataSet dataSet, string srcTable) => DbDataAdapter.Fill(dataSet, srcTable);
 
-    public virtual int Fill(DataSet dataSet, int startRecord, int maxRecords, string srcTable) => 
+    public virtual int Fill(DataSet dataSet, int startRecord, int maxRecords, string srcTable) =>
         DbDataAdapter.Fill(dataSet, startRecord, maxRecords, srcTable);
 
     public virtual int Fill(DataTable dataTable) => DbDataAdapter.Fill(dataTable);
 
-    public virtual int Fill(int startRecord, int maxRecords, params DataTable[] dataTables) => 
+    public virtual int Fill(int startRecord, int maxRecords, params DataTable[] dataTables) =>
         DbDataAdapter.Fill(startRecord, maxRecords, dataTables);
 
     public DataTable[] FillSchema(DataSet dataSet, SchemaType schemaType) => DbDataAdapter.FillSchema(dataSet, schemaType);
-    public virtual DataTable[] FillSchema(DataSet dataSet, SchemaType schemaType, string srcTable) => 
+    public virtual DataTable[] FillSchema(DataSet dataSet, SchemaType schemaType, string srcTable) =>
         DbDataAdapter.FillSchema(dataSet, schemaType, srcTable);
 
     public IDataParameter[] GetFillParameters() => DbDataAdapter.GetFillParameters();

@@ -1,7 +1,7 @@
-using System.Data.Common;
-using System.Diagnostics.CodeAnalysis;
 using DotNetWrappers.System.Data.Common;
 using Moq;
+using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
 
 namespace DotNetWrappers.Tests.System.Data.Common;
 

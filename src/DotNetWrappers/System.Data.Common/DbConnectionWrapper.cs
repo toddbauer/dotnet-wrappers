@@ -58,14 +58,14 @@ public class DbConnectionWrapper(DbConnection dbConnection) : IDbConnectionWrapp
     public virtual DataTable GetSchema() => DbConnection.GetSchema();
     public virtual DataTable GetSchema(string collectionName) => DbConnection.GetSchema(collectionName);
 
-    public virtual DataTable GetSchema(string collectionName, string?[] restrictionValues) => 
+    public virtual DataTable GetSchema(string collectionName, string?[] restrictionValues) =>
         DbConnection.GetSchema(collectionName, restrictionValues);
 
     public virtual Task<DataTable> GetSchemaAsync(CancellationToken cancellationToken = default) => DbConnection.GetSchemaAsync(cancellationToken);
 
     public virtual Task<DataTable> GetSchemaAsync(string collectionName, CancellationToken cancellationToken = default) =>
         DbConnection.GetSchemaAsync(collectionName, cancellationToken);
-    
+
     public virtual Task<DataTable> GetSchemaAsync(string collectionName, string?[] restrictionValues, CancellationToken cancellationToken = default) =>
         DbConnection.GetSchemaAsync(collectionName, restrictionValues, cancellationToken);
 

@@ -28,10 +28,10 @@ namespace DotNetWrappers.System.Data.Common
         public virtual Task<int> ExecuteNonQueryAsync(CancellationToken cancellationToken) => DbCommand.ExecuteNonQueryAsync(cancellationToken);
         public virtual async Task<IDbDataReaderWrapper> ExecuteReaderAsync() => new DbDataReaderWrapper(await DbCommand.ExecuteReaderAsync());
 
-        public virtual async Task<IDbDataReaderWrapper> ExecuteReaderAsync(CancellationToken cancellationToken) => 
+        public virtual async Task<IDbDataReaderWrapper> ExecuteReaderAsync(CancellationToken cancellationToken) =>
             new DbDataReaderWrapper(await DbCommand.ExecuteReaderAsync(cancellationToken));
 
-        public virtual async Task<IDbDataReaderWrapper> ExecuteReaderAsync(CommandBehavior behavior) => new 
+        public virtual async Task<IDbDataReaderWrapper> ExecuteReaderAsync(CommandBehavior behavior) => new
             DbDataReaderWrapper(await DbCommand.ExecuteReaderAsync(behavior));
 
         public virtual async Task<IDbDataReaderWrapper> ExecuteReaderAsync(CommandBehavior behavior, CancellationToken cancellationToken) =>

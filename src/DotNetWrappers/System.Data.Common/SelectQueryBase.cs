@@ -19,7 +19,7 @@ public abstract class SelectQueryBase<T> : QueryBase<T>, ISelectQuery<T>
     {
         var list = new List<T>();
 
-        while(dbDataReader.Read())
+        while (dbDataReader.Read())
             list.Add(MapReader(dbDataReader));
 
         return list;

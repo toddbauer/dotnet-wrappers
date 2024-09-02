@@ -72,12 +72,12 @@ public class DbParameterWrapper(DbParameter dbParameter) : IDbParameterWrapper
 
     public int Size
     {
-        get => DbParameter.Size; 
+        get => DbParameter.Size;
         set => DbParameter.Size = value;
     }
 
     #endregion IDbDataParameter
-    
+
     [EditorBrowsable(EditorBrowsableState.Advanced)]
     public void ResetDbType()
     {

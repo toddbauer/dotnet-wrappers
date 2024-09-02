@@ -55,7 +55,7 @@ public class QueryExecutor(Func<IDbConnectionWrapper> dbConnectionWrapperFactory
         if (dbDataParameters == null!)
             return;
 
-        foreach(var parameter in dbDataParameters)
+        foreach (var parameter in dbDataParameters)
             dbCommand.Parameters.Add(parameter);
     }
 }

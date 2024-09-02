@@ -25,7 +25,7 @@ public interface IDbConnectionWrapper : IDisposable
     int ConnectionTimeout { get; }
     string Database { get; }
     string DataSource { get; }
-    
+
 
     [Browsable(false)]
     string ServerVersion { get; }
