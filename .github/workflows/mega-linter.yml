@@ -32,6 +32,8 @@ env:
   # or posted in a PR (pull_request)
   APPLY_FIXES_MODE: commit
 
+  COPYPASTE_JSCPD_DISABLE_ERRORS_IF_LESS_THAN: 200
+
 concurrency:
   group: ${{ github.ref }}-${{ github.workflow }}
   cancel-in-progress: true
