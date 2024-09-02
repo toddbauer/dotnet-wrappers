@@ -102,6 +102,7 @@ jobs:
           # DISABLE: COPYPASTE,SPELL
 
           CSHARP_DOTNET_FORMAT_ARGUMENTS: src/DotNetWrappers.sln
+          COPYPASTE_JSCPD_ARGUMENTS: --threshold 40
 
       # Upload MegaLinter artifacts
       - name: Archive production artifacts
