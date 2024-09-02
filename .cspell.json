@@ -1,0 +1,28 @@
+{
+    "version": "0.2",
+    "language": "en",
+    "words": [
+        "mkdirp",
+        "tsmerge",
+        "githubusercontent",
+        "streetsidesoftware",
+        "vsmarketplacebadge",
+        "visualstudio",
+        "struct",
+        "Disposable",
+        "Browsable",
+        "Savepoints",
+        "savepoint"
+    ],
+    "flagWords": [
+        "hte"
+    ],
+    "ignorePaths": [
+        "**/node_modules/**",
+        "**/.git/**",
+        "**/*.md",
+        "**/DotNetWrappers.Tests/**",
+        "**/.editorconfig",
+        "**/.jscpd.json"
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "threshold": 20000,
+  "reporters": ["html", "markdown"],
+  "ignore": [
+    "**/node_modules/**",
+    "**/.git/**",
+    "**/*.md",
+    "**/DotNetWrappers.Tests/**"
+  ]
+}
