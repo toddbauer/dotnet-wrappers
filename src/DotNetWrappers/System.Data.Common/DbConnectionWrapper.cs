@@ -82,5 +82,5 @@ public class DbConnectionWrapper(DbConnection dbConnection) : IDbConnectionWrapp
         DbConnection.Dispose();
     }
 
-    #endregion IDisposble Members
+    #endregion IDisposable Members
 }
