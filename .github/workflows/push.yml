@@ -61,9 +61,9 @@ jobs:
         filename: src/DotNetWrappers.Tests/coverage/**/coverage.cobertura.xml
         badge: true
         fail_below_min: true
-        format: markdown
+        format: text
         hide_branch_rate: false
         hide_complexity: true
         indicators: true
-        output: both
+        output: console
         thresholds: '10 80'
