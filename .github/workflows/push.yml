@@ -52,7 +52,7 @@ jobs:
       working-directory: src/DotNetWrappers
       
     - name: Test
-      run: dotnet test  --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory coverage
+      run: dotnet test  --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
       working-directory: src/DotNetWrappers.Tests
       
     - name: Coverage
@@ -72,6 +72,6 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: test-results
-        path: coverage
+        path: src/DotNetWrappers.Tests/coverage
       # Use always() to always run this step to publish test results when there are test failures
       if: ${{ always() }}
