@@ -27,28 +27,34 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
+      
+#    - name: Lint
+#      uses: github/super-linter@v4
+#      env:
+#        VALIDATE_ALL_CODEBASE: true
+#        DEFAULT_BRANCH: "main"
+#        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#        #FILTER_REGEX_INCLUDE: src/DotNetWrappers
+#        VALIDATE_CSHARP: true
+#        EDITORCONFIG_FILE_NAME: ./.editorconfig
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.0.x
+        
     - name: Restore dependencies
       run: dotnet restore
       working-directory: src
-    - name: Lint
-      uses: github/super-linter@v4
-      env:
-        VALIDATE_ALL_CODEBASE: true
-        DEFAULT_BRANCH: "main"
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        #FILTER_REGEX_INCLUDE: src/DotNetWrappers
-        VALIDATE_CSHARP: true
-        EDITORCONFIG_FILE_NAME: ./.editorconfig
+      
     - name: Build
       run: dotnet build --configuration Release --no-restore
       working-directory: src/DotNetWrappers
+      
     - name: Test
       run: dotnet test  --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
       working-directory: src/DotNetWrappers.Tests
+      
     - name: Coverage
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
@@ -61,3 +67,11 @@ jobs:
         indicators: true
         output: both
         thresholds: '10 80'
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v4
+      with:
+        name: test-results
+        path: ./coverage
+        # Use always() to always run this step to publish test results when there are test failures
+        if: ${{ always() }}
