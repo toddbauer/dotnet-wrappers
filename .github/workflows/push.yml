@@ -73,5 +73,5 @@ jobs:
       with:
         name: test-results
         path: ./coverage
-        # Use always() to always run this step to publish test results when there are test failures
-        if: ${{ always() }}
+      # Use always() to always run this step to publish test results when there are test failures
+      if: ${{ always() }}
