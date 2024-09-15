@@ -68,10 +68,6 @@ jobs:
         output: both
         thresholds: '10 80'
 
-    - name: Upload test results
-      uses: actions/upload-artifact@v4
-      with:
-        name: test-results
-        path: src/DotNetWrappers.Tests/coverage
-      # Use always() to always run this step to publish test results when there are test failures
-      if: ${{ always() }}
+    - name: Download artifacts
+      uses: actions/download-artifact@v4
+      run: ls -R
