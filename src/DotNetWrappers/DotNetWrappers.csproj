@@ -9,6 +9,7 @@
 	<PackageTags>dependency injection,unit testing</PackageTags>
 	<PackageLicenseExpression>MIT</PackageLicenseExpression>	
 	<PackageReadmeFile>README.md</PackageReadmeFile>
+	<RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
   </PropertyGroup>
 
   <ItemGroup>
