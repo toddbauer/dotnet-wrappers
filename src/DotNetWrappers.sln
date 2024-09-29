@@ -5,7 +5,9 @@ VisualStudioVersion = 17.11.35208.52
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetWrappers", "DotNetWrappers\DotNetWrappers.csproj", "{804F634D-CF16-40A8-8BCE-A7F081E52C60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetWrappers.Tests", "DotNetWrappers.Tests\DotNetWrappers.Tests.csproj", "{D8C40203-F0D9-4570-8400-208308CA0C6E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DotNetWrappers.Tests", "DotNetWrappers.Tests\DotNetWrappers.Tests.csproj", "{D8C40203-F0D9-4570-8400-208308CA0C6E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DotNetWrappers.Tests.Integration", "..\DotNetWrappers.Tests.Integration\DotNetWrappers.Tests.Integration.csproj", "{3A6E2FBC-6414-4768-A80F-D38C73EFD700}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D8C40203-F0D9-4570-8400-208308CA0C6E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D8C40203-F0D9-4570-8400-208308CA0C6E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D8C40203-F0D9-4570-8400-208308CA0C6E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A6E2FBC-6414-4768-A80F-D38C73EFD700}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A6E2FBC-6414-4768-A80F-D38C73EFD700}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A6E2FBC-6414-4768-A80F-D38C73EFD700}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A6E2FBC-6414-4768-A80F-D38C73EFD700}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
