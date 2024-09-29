@@ -4,21 +4,58 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace DotNetWrappers.System.Data.Common;
 
+// ReSharper disable once InconsistentNaming
 public class DbCommandWrapper(DbCommand dbCommand) : IDbCommandWrapper
 {
     public virtual DbCommand DbCommand { get; } = dbCommand;
 
     #region DbCommand Members
 
-    [AllowNull] public virtual string CommandText { get; set; }
-    public virtual int CommandTimeout { get; set; }
-    public virtual CommandType CommandType { get; set; }
-    public virtual IDbConnectionWrapper? Connection { get; set; }
-    public virtual bool DesignTimeVisible { get; set; }
+    [AllowNull]
+    public virtual string CommandText
+    {
+        get => DbCommand.CommandText;
+        set => DbCommand.CommandText = value;
+    }
+
+    public virtual int CommandTimeout
+    {
+        get => DbCommand.CommandTimeout;
+        set => DbCommand.CommandTimeout = value;
+    }
+
+    public virtual CommandType CommandType
+    {
+        get => DbCommand.CommandType;
+        set => DbCommand.CommandType = value;
+    }
+
+    public virtual IDbConnectionWrapper? Connection
+    {
+        get => new DbConnectionWrapper(DbCommand.Connection!);
+        set => DbCommand.Connection = value?.DbConnection;
+    }
+
+    public virtual bool DesignTimeVisible
+    {
+        get => DbCommand.DesignTimeVisible;
+        set => DbCommand.DesignTimeVisible = value;
+    }
 
     public virtual IDbParameterCollectionWrapper Parameters { get; } = new DbParameterCollectionWrapper(dbCommand.Parameters);
-    public virtual IDbTransactionWrapper? Transaction { get; set; }
-    public virtual UpdateRowSource UpdatedRowSource { get; set; }
+
+    public virtual IDbTransactionWrapper? Transaction
+    {
+        get => new DbTransactionWrapper(DbCommand.Transaction!);
+        set => DbCommand.Transaction = value?.DbTransaction;
+    }
+
+    public virtual UpdateRowSource UpdatedRowSource
+    {
+        get => DbCommand.UpdatedRowSource;
+        set => DbCommand.UpdatedRowSource = value;
+    }
+
     public virtual void Cancel() => DbCommand.Cancel();
     public virtual IDbParameterWrapper CreateParameter() => new DbParameterWrapper(DbCommand.CreateParameter());
     public virtual int ExecuteNonQuery() => DbCommand.ExecuteNonQuery();

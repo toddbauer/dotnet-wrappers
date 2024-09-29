@@ -5,6 +5,7 @@ using System.Data.Common;
 
 namespace DotNetWrappers.System.Data.Common;
 
+// ReSharper disable once InconsistentNaming
 public class DbDataReaderWrapper(DbDataReader dbDataReader) : IDbDataReaderWrapper
 {
     public DbDataReader DbDataReader { get; } = dbDataReader ?? throw new ArgumentNullException(nameof(dbDataReader));
@@ -38,9 +39,10 @@ public class DbDataReaderWrapper(DbDataReader dbDataReader) : IDbDataReaderWrapp
     public virtual Task<bool> ReadAsync(CancellationToken cancellationToken) => DbDataReader.ReadAsync(cancellationToken);
     public virtual Task<bool> NextResultAsync() => DbDataReader.NextResultAsync();
     public virtual Task<bool> NextResultAsync(CancellationToken cancellationToken) => DbDataReader.NextResultAsync(cancellationToken);
+
     public virtual Task CloseAsync() => DbDataReader.CloseAsync();
 
-    public virtual Task<DataTable?> GetSchemaTableAsync(CancellationToken cancellationToken = default) => 
+    public virtual Task<DataTable?> GetSchemaTableAsync(CancellationToken cancellationToken = default) =>
         DbDataReader.GetSchemaTableAsync(cancellationToken);
 
     public virtual Task<ReadOnlyCollection<DbColumn>> GetColumnSchemaAsync(CancellationToken cancellationToken = default) =>
@@ -75,4 +77,45 @@ public class DbDataReaderWrapper(DbDataReader dbDataReader) : IDbDataReaderWrapp
     public virtual int RecordsAffected => DbDataReader.RecordsAffected;
     public virtual IEnumerator GetEnumerator() => DbDataReader.GetEnumerator();
     public virtual ValueTask DisposeAsync() => DbDataReader.DisposeAsync();
+
+    #region DataReaderExtensions Wrappers
+
+    public virtual bool GetBoolean(string name) => DbDataReader.GetBoolean(name);
+    public virtual byte GetByte(string name) => DbDataReader.GetByte(name);
+
+    public virtual long GetBytes(string name, long dataOffset, byte[] buffer, int bufferOffset, int length) => 
+        DbDataReader.GetBytes(name, dataOffset, buffer, bufferOffset, length);
+
+    public virtual char GetChar(string name) => DbDataReader.GetChar(name);
+    public virtual long GetChars(string name, long dataOffset, char[] buffer, int bufferOffset, int length) => 
+        DbDataReader.GetChars(name, dataOffset, buffer, bufferOffset, length);
+
+    public IDataReader GetData(string name) => new DbDataReaderWrapper(DbDataReader.GetData(name));
+    public virtual string GetDataTypeName(string name) => DbDataReader.GetDataTypeName(name);
+    public virtual DateTime GetDateTime(string name) => DbDataReader.GetDateTime(name);
+    public virtual decimal GetDecimal(string name) => DbDataReader.GetDecimal(name);
+    public virtual double GetDouble(string name) => DbDataReader.GetDouble(name);
+    public virtual Type GetFieldType(string name) => DbDataReader.GetFieldType(name);
+    public virtual T GetFieldValue<T>(string name) => DbDataReader.GetFieldValue<T>(name);
+
+    public virtual Task<T> GetFieldValueAsync<T>(string name, CancellationToken cancellationToken = default(CancellationToken)) => 
+        DbDataReader.GetFieldValueAsync<T>(name, cancellationToken);
+
+    public virtual float GetFloat(string name) => DbDataReader.GetFloat(name);
+    public virtual Guid GetGuid(string name) => DbDataReader.GetGuid(name);
+    public virtual short GetInt16(string name) => DbDataReader.GetInt16(name);
+    public virtual int GetInt32(string name) => DbDataReader.GetInt32(name);
+    public virtual long GetInt64(string name) => DbDataReader.GetInt64(name);
+    public virtual Type GetProviderSpecificFieldType(string name) => DbDataReader.GetProviderSpecificFieldType(name);
+    public virtual object GetProviderSpecificValue(string name) => DbDataReader.GetProviderSpecificValue(name);
+    public virtual Stream GetStream(string name) => DbDataReader.GetStream(name);
+    public virtual string GetString(string name) => DbDataReader.GetString(name);
+    public virtual TextReader GetTextReader(string name) => DbDataReader.GetTextReader(name);
+    public virtual object GetValue(string name) => DbDataReader.GetValue(name);
+    public virtual bool IsDBNull(string name) => DbDataReader.IsDBNull(name);
+
+    public virtual Task<bool> IsDBNullAsync(string name, CancellationToken cancellationToken = default(CancellationToken)) => 
+        DbDataReader.IsDBNullAsync(name, cancellationToken);
+
+    #endregion DataReaderExtensions Wrappers
 }

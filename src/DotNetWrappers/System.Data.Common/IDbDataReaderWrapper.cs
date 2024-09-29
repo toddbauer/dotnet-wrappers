@@ -37,4 +37,47 @@ public interface IDbDataReaderWrapper : IDataReader, IEnumerable, IAsyncDisposab
     Task<bool> ReadAsync(CancellationToken cancellationToken);
     Task<bool> NextResultAsync();
     Task<bool> NextResultAsync(CancellationToken cancellationToken);
+
+    #region DataReaderExtensions Wrappers
+
+    bool GetBoolean(string name);
+    byte GetByte(string name);
+    long GetBytes(string name, long dataOffset, byte[] buffer, int bufferOffset, int length);
+    char GetChar(string name);
+    long GetChars(string name, long dataOffset, char[] buffer, int bufferOffset, int length);
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    IDataReader GetData(string name);
+
+    string GetDataTypeName(string name);
+    DateTime GetDateTime(string name);
+    decimal GetDecimal(string name);
+    double GetDouble(string name);
+    Type GetFieldType(string name);
+    T GetFieldValue<T>(string name);
+    Task<T> GetFieldValueAsync<T>(string name, CancellationToken cancellationToken = default(CancellationToken));
+    float GetFloat(string name);
+    Guid GetGuid(string name);
+    short GetInt16(string name);
+    int GetInt32(string name);
+    long GetInt64(string name);
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    Type GetProviderSpecificFieldType(string name);
+
+    [EditorBrowsable(EditorBrowsableState.Never)]
+    object GetProviderSpecificValue(string name);
+
+    Stream GetStream(string name);
+    string GetString(string name);
+    TextReader GetTextReader(string name);
+    object GetValue(string name);
+
+    // ReSharper disable once InconsistentNaming
+    bool IsDBNull(string name);
+
+    // ReSharper disable once InconsistentNaming
+    Task<bool> IsDBNullAsync(string name, CancellationToken cancellationToken = default(CancellationToken));
+
+    #endregion DataReaderExtensions Wrappers
 }
