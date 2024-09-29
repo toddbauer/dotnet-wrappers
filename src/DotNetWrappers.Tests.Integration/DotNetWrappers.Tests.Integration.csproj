@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\DotNetWrappers\DotNetWrappers.csproj" />
+    <ProjectReference Include="..\DotNetWrappers\DotNetWrappers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

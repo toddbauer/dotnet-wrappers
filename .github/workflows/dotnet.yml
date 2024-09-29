@@ -41,10 +41,10 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
       working-directory: src/DotNetWrappers
-    - name: Unit testing
+    - name: Unit Tests
       run: dotnet test  --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
       working-directory: src/DotNetWrappers.Tests
-    - name: Integration testing
+    - name: Integration Tests
       run: dotnet test  --configuration Release --verbosity normal
       working-directory: src/DotNetWrappers.Tests.Integration
     - name: Coverage
