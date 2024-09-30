@@ -43,14 +43,17 @@ jobs:
       working-directory: src/DotNetWrappers
     - name: Unit Tests
       run: dotnet test  --configuration Release --verbosity normal --collect:"XPlat Code Coverage" --results-directory ./coverage
-      working-directory: src/DotNetWrappers.Tests
+        working-directory: src/DotNetWrappers.Tests
     - name: Setup Testcontainers Cloud Client
       uses: atomicjar/testcontainers-cloud-setup-action@v1
       with:
         token: ${{ secrets.TC_CLOUD_TOKEN }}
-    - name: Integration Tests
+    - name: Integration Tests (SQL Server)
       run: dotnet test  --configuration Release --verbosity normal
       working-directory: src/DotNetWrappers.Tests.Integration
+    - name: Integration Tests (Oracle)
+      run: dotnet test  --configuration Release --verbosity normal
+      working-directory: src/DotNetWrappers.Tests.Integration.Oracle
     - name: Coverage
       uses: irongut/CodeCoverageSummary@v1.3.0
       with:
