@@ -1,8 +1,8 @@
 using DotNetWrappers.System.Data.Common;
 using System.Data;
-using Microsoft.Data.SqlClient;
+using Oracle.ManagedDataAccess.Client;
 
-namespace DotNetWrappers.Tests.Integration;
+namespace DotNetWrappers.Tests.Integration.Oracle;
 
 [TestClass]
 public class DbContextTests
@@ -14,7 +14,7 @@ public class DbContextTests
     [TestInitialize]
     public void TestInitialize()
     {
-        _queryExecutor = new QueryExecutor(() => new SqlConnection(GlobalTestInitializer.MsSqlContainer.GetConnectionString()));
+        _queryExecutor = new QueryExecutor(() => new OracleConnection(GlobalTestInitializer.OracleContainer.GetConnectionString()));
 
         _target = new DbContext(_queryExecutor);
     }
@@ -33,7 +33,7 @@ public class DbContextTests
         // Arrange
 
         // Act
-        var results = (await _target.FindAllAsync(new TestSelectQuery(GlobalTestInitializer.MsSqlContainer.GetConnectionString()))).ToList();
+        var results = (await _target.FindAllAsync(new TestSelectQuery(GlobalTestInitializer.OracleContainer.GetConnectionString()))).ToList();
 
         // Assert
         Assert.AreEqual(2, results.Count);

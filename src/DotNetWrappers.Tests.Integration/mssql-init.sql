@@ -1,14 +1,14 @@
 CREATE TABLE TestUsers (
-    Id UNIQUEIDENTIFIER NOT NULL,
+    Id NUMERIC IDENTITY(1, 1),
     [FirstName] NVARCHAR(50) NOT NULL,
 	[LastName] NVARCHAR(50) NOT NULL,
     PRIMARY KEY (Id)
 );
 GO
 
-INSERT INTO [TestUsers] ([Id], [FirstName], [LastName])
+INSERT INTO [TestUsers] ([FirstName], [LastName])
 VALUES
-(NEWID(), 'John', 'Doe'),
-(NEWID(), 'Jane', 'Doe'),
-(NEWID(), 'John', 'Smith');
+('John', 'Doe'),
+('Jane', 'Doe'),
+('John', 'Smith');
 GO

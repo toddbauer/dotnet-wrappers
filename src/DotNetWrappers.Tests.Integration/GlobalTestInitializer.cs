@@ -12,7 +12,9 @@ public static class GlobalTestInitializer
     {
         MsSqlContainer = new MsSqlBuilder().Build();
         MsSqlContainer.StartAsync().Wait();
-        MsSqlContainer.ExecScriptAsync(File.ReadAllText("mssql-init.sql")).Wait();
+        var execResult = MsSqlContainer.ExecScriptAsync(File.ReadAllText("mssql-init.sql")).Result;
+        if (execResult.Stdout.Contains("ORA-"))
+            throw new Exception(execResult.Stdout);
     }
 
     [AssemblyCleanup]
